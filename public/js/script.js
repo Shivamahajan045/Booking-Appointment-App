@@ -4,7 +4,7 @@ let ul = document.querySelector("ul");
 const fetchUser = () => {
   ul.innerHTML = "";
   axios
-    .get("http://localhost:3000/users/getUser")
+    .get("http://localhost:3000/users")
     .then((result) => {
       let listOfUsers = result.data;
       // console.log(listOfUsers);
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", fetchUser);
 //delete
 const deleteUser = (id, li) => {
   axios
-    .delete(`http://localhost:3000/users/deleteUser/${id}`)
+    .delete(`http://localhost:3000/users/${id}`)
     .then((result) => {
       console.log("USER DELETED SUCCESSFULLY!");
       li.remove();
@@ -76,7 +76,7 @@ form.addEventListener("submit", (e) => {
   if (id) {
     // perform put request
     axios
-      .put(`http://localhost:3000/users/editUser/${id}`, obj)
+      .put(`http://localhost:3000/users/${id}`, obj)
       .then((result) => {
         console.log("USER UPDATED SUCCESSFULLY!");
         form.removeAttribute("edit-id");
@@ -92,9 +92,10 @@ form.addEventListener("submit", (e) => {
   //axios post request take a url and data in the form of object
   else {
     axios
-      .post("http://localhost:3000/users/addUser", obj)
+      .post("http://localhost:3000/users", obj)
       .then((res) => {
         console.log("User Added successfully");
+        form.reset();
         fetchUser();
       })
       .catch((err) => {
